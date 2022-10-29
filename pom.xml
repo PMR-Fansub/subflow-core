@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>subflow-core</artifactId>
+  <artifactId>subflow</artifactId>
   <build>
     <plugins>
       <plugin>
@@ -73,10 +73,10 @@
   </dependencies>
 
 
-  <description>subflow-core</description>
-  <groupId>team.pmrfansub</groupId>
+  <description>subflow</description>
+  <groupId>com.pmrfansub</groupId>
   <modelVersion>4.0.0</modelVersion>
-  <name>subflow-core</name>
+  <name>subflow</name>
   <parent>
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
