@@ -31,7 +31,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -39,7 +38,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -66,7 +64,6 @@ public class UserController {
 
   @Operation(summary = "注册", description = "注册一个新用户")
   @PostMapping("register")
-  @ResponseStatus(HttpStatus.CREATED)
   @Transactional(rollbackOn = Exception.class)
   public void register(@RequestBody @Valid RegisterReq registerReq, HttpServletRequest request) {
     User user = new User();
@@ -88,7 +85,6 @@ public class UserController {
 
   @Operation(summary = "登录", description = "用户登录")
   @PostMapping("login")
-  @ResponseStatus(HttpStatus.OK)
   public LoggedResp login(@RequestBody @Valid LoginReq loginReq, HttpServletRequest request) {
     return userService.loginUser(loginReq.getUsername(), loginReq.getPassword(),
         request.getRemoteAddr());
@@ -98,7 +94,6 @@ public class UserController {
   @Operation(summary = "获取用户信息", description = "获取用户信息")
   @SaCheckLogin
   @GetMapping("{uid}")
-  @ResponseStatus(HttpStatus.OK)
   public User getUserInfo(@PathVariable Integer uid) {
     return userService.getUserByUid(uid);
   }
@@ -106,21 +101,26 @@ public class UserController {
   @Operation(summary = "获取当前登录用户信息", description = "获取当前登录用户信息")
   @SaCheckLogin
   @GetMapping("")
-  @ResponseStatus(HttpStatus.OK)
   public User getCurrentUserInfo() {
     Integer uid = StpUtil.getLoginId(-1);
-    return getUserInfo(uid);
+    return userService.getUserByUid(uid);
   }
 
 
   @Operation(summary = "更新用户信息", description = "更新用户信息")
   @SaCheckLogin
   @PatchMapping("{uid}")
-  @ResponseStatus(HttpStatus.OK)
   public void updateUserInfo(@PathVariable Integer uid,
       @RequestBody @Valid UpdateUserInfoRequest updateUserInfoRequest) {
-    if (updateUserInfoRequest.getNickname() != null) {
-      userService.updateNickname(uid, updateUserInfoRequest.getNickname());
-    }
+    userService.updateUserInfo(uid, updateUserInfoRequest);
+  }
+
+  @Operation(summary = "更新当前用户信息", description = "更新当前用户信息")
+  @SaCheckLogin
+  @PatchMapping("")
+  public void updateCurrentUserInfo(
+      @RequestBody @Valid UpdateUserInfoRequest updateUserInfoRequest) {
+    Integer uid = StpUtil.getLoginId(-1);
+    userService.updateUserInfo(uid, updateUserInfoRequest);
   }
 }

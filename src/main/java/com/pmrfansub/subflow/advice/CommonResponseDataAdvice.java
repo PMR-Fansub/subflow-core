@@ -18,7 +18,9 @@
 package com.pmrfansub.subflow.advice;
 
 import com.pmrfansub.subflow.common.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -32,6 +34,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @version 1.0
  * @since 1.0
  */
+@Slf4j
 @RestControllerAdvice(basePackages = {"com.pmrfansub.subflow.controller"})
 public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
 
@@ -44,12 +47,15 @@ public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
   public Object beforeBodyWrite(Object body, MethodParameter returnType,
       MediaType selectedContentType,
       Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-
+    log.debug("In common resp advice");
     if (!(body instanceof Result)) {
       return Result.ok(body);
     }
 
+    HttpStatus status = ((Result<?>) body).getHttpStatus();
+    log.debug("Set httpStatus: {}", status);
     response.setStatusCode(((Result<?>) body).getHttpStatus());
+    log.debug(response.toString());
     return body;
   }
 }

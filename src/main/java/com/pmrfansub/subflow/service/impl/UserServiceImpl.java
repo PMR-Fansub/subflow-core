@@ -22,6 +22,7 @@ import com.pmrfansub.subflow.common.BusinessException;
 import com.pmrfansub.subflow.common.ResultCode;
 import com.pmrfansub.subflow.common.UserStatus;
 import com.pmrfansub.subflow.dto.LoggedResp;
+import com.pmrfansub.subflow.dto.UpdateUserInfoRequest;
 import com.pmrfansub.subflow.entity.User;
 import com.pmrfansub.subflow.repository.UserRepository;
 import com.pmrfansub.subflow.service.UserService;
@@ -85,6 +86,14 @@ public class UserServiceImpl implements UserService {
       throw new BusinessException(ResultCode.QUERY_FAILED, "用户不存在");
     }
     return user;
+  }
+
+  @Override
+  public void updateUserInfo(Integer uid, UpdateUserInfoRequest userInfoRequest) {
+    String nickname = userInfoRequest.getNickname();
+    if (nickname != null) {
+      updateNickname(uid, nickname);
+    }
   }
 
   @Override

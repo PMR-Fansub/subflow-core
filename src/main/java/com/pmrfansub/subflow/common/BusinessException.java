@@ -76,6 +76,16 @@ public class BusinessException extends RuntimeException {
   /**
    * 业务层异常 构造函数
    *
+   * @param code 异常代码
+   */
+  public BusinessException(ResultCode code) {
+    super(code.getMessage());
+    this.code = code;
+  }
+
+  /**
+   * 业务层异常 构造函数
+   *
    * @param code    异常代码
    * @param message 异常信息
    * @param cause   Throwable

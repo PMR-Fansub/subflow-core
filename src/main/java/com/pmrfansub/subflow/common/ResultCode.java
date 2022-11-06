@@ -61,7 +61,11 @@ public enum ResultCode {
   /**
    * 查询操作失败
    */
-  QUERY_FAILED(false, 1007, "查询失败", HttpStatus.NOT_FOUND);
+  QUERY_FAILED(false, 1007, "查询失败", HttpStatus.NOT_FOUND),
+  /**
+   * 权限不足
+   */
+  PERMISSION_DENIED(false, 1008, "权限不足", HttpStatus.FORBIDDEN);
 
   private final Boolean success;
   private final int code;
