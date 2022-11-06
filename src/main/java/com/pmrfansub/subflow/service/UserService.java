@@ -18,6 +18,7 @@
 package com.pmrfansub.subflow.service;
 
 import com.pmrfansub.subflow.dto.LoggedResp;
+import com.pmrfansub.subflow.dto.UpdateUserInfoRequest;
 import com.pmrfansub.subflow.entity.User;
 
 /**
@@ -56,6 +57,15 @@ public interface UserService {
    * @throws com.pmrfansub.subflow.common.BusinessException 通用业务异常
    */
   User getUserByUid(Integer uid);
+
+  /**
+   * 更新用户信息
+   *
+   * @param uid             用户UID
+   * @param userInfoRequest 请求实体
+   * @throws com.pmrfansub.subflow.common.BusinessException 通用业务异常
+   */
+  void updateUserInfo(Integer uid, UpdateUserInfoRequest userInfoRequest);
 
   /**
    * 更新昵称

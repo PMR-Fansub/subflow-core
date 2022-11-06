@@ -21,7 +21,10 @@ import cn.dev33.satoken.exception.NotLoginException;
 import com.pmrfansub.subflow.common.BusinessException;
 import com.pmrfansub.subflow.common.Result;
 import com.pmrfansub.subflow.common.ResultCode;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,14 +39,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @since 1.0
  */
 @RestControllerAdvice
+@Slf4j
 public class ExceptionControllerAdvice {
 
   @ExceptionHandler(BusinessException.class)
-  public Result<?> handleBusinessException(BusinessException e) {
-    return Result.failed(e.getCode(), e.getMessage());
+  public ResponseEntity<Object> handleBusinessException(BusinessException e) {
+    log.debug("In exception advice");
+    Result<Object> result = Result.failed(e.getCode(), e.getMessage());
+    return new ResponseEntity<>(result, new HttpHeaders(), e.getCode().getHttpStatus());
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Result<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
     ObjectError error = e.getBindingResult().getAllErrors().get(0);
     return Result.failed(ResultCode.FORM_INVALID, error.getDefaultMessage());
