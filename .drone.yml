@@ -4,6 +4,9 @@ name: default
 steps:
   - name: build test
     image: maven:3-openjdk-17
+    volumes:
+      - name: maven-cache
+        path: /root/.m2
     commands:
       - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       - mvn test -B
