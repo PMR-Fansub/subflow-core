@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. PMR Fansub
+ * Copyright (c) 2022-2023. PMR Fansub
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.pmrfansub.subflow.dto;
+package com.pmrfansub.subflow.dto.forms;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,9 +26,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UpdateUserInfoRequest {
+public class LoginReq {
 
-  @NotNull(message = "昵称不可为空")
-  @NotBlank(message = "昵称不可为空")
-  private String nickname;
+  @NotNull(message = "用户名不能为空")
+  @NotBlank(message = "用户名不能为空")
+  private String username;
+
+  @NotNull(message = "密码不能为空")
+  @NotBlank(message = "密码不能为空")
+  private String password;
+
 }

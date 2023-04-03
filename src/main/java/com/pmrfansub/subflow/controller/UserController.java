@@ -19,10 +19,10 @@ package com.pmrfansub.subflow.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
-import com.pmrfansub.subflow.dto.LoggedResp;
-import com.pmrfansub.subflow.dto.LoginReq;
-import com.pmrfansub.subflow.dto.RegisterReq;
-import com.pmrfansub.subflow.dto.UpdateUserInfoRequest;
+import com.pmrfansub.subflow.dto.forms.LoggedResp;
+import com.pmrfansub.subflow.dto.forms.LoginReq;
+import com.pmrfansub.subflow.dto.forms.RegisterReq;
+import com.pmrfansub.subflow.dto.forms.UpdateUserInfoReq;
 import com.pmrfansub.subflow.entity.User;
 import com.pmrfansub.subflow.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -73,10 +73,10 @@ public class UserController {
     user.setUsername(registerReq.getUsername());
     user.setEmail(registerReq.getEmail());
     user.setNickname(user.getUsername());
-    user.setRegister_time(now);
-    user.setRegister_ip(remoteAddr);
-    user.setLogin_time(now);
-    user.setLogin_ip(remoteAddr);
+    user.setRegisterTime(now);
+    user.setRegisterIp(remoteAddr);
+    user.setLoginTime(now);
+    user.setLoginIp(remoteAddr);
     user.setPassword(passwordEncoder.encode(registerReq.getPassword()));
 
     userService.addNewUser(user);
@@ -111,16 +111,16 @@ public class UserController {
   @SaCheckLogin
   @PatchMapping("{uid}")
   public void updateUserInfo(@PathVariable Integer uid,
-      @RequestBody @Valid UpdateUserInfoRequest updateUserInfoRequest) {
-    userService.updateUserInfo(uid, updateUserInfoRequest);
+      @RequestBody @Valid UpdateUserInfoReq updateUserInfoReq) {
+    userService.updateUserInfo(uid, updateUserInfoReq);
   }
 
   @Operation(summary = "更新当前用户信息", description = "更新当前用户信息")
   @SaCheckLogin
   @PatchMapping("")
   public void updateCurrentUserInfo(
-      @RequestBody @Valid UpdateUserInfoRequest updateUserInfoRequest) {
+      @RequestBody @Valid UpdateUserInfoReq updateUserInfoReq) {
     Integer uid = StpUtil.getLoginId(-1);
-    userService.updateUserInfo(uid, updateUserInfoRequest);
+    userService.updateUserInfo(uid, updateUserInfoReq);
   }
 }
