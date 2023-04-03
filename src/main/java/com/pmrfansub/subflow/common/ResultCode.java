@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. PMR Fansub
+ * Copyright (c) 2022-2023. PMR Fansub
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,19 @@ public enum ResultCode {
   /**
    * 权限不足
    */
-  PERMISSION_DENIED(false, 1008, "权限不足", HttpStatus.FORBIDDEN);
+  PERMISSION_DENIED(false, 1008, "权限不足", HttpStatus.FORBIDDEN),
+  /**
+   * 资源不存在
+   */
+  NOT_FOUND(false, 4000, "资源不存在", HttpStatus.NOT_FOUND),
+  /**
+   * 资源不存在
+   */
+  NOT_SUPPORTED(false, 4001, "不支持此操作", HttpStatus.METHOD_NOT_ALLOWED),
+  /**
+   * 未知的错误
+   */
+  UNKNOWN(false, 9999, "未知错误", HttpStatus.INTERNAL_SERVER_ERROR);
 
   private final Boolean success;
   private final int code;
