@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. PMR Fansub
+ * Copyright (c) 2022-2023. PMR Fansub
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,15 +47,14 @@ public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
   public Object beforeBodyWrite(Object body, MethodParameter returnType,
       MediaType selectedContentType,
       Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-    log.debug("In common resp advice");
     if (!(body instanceof Result)) {
       return Result.ok(body);
     }
 
     HttpStatus status = ((Result<?>) body).getHttpStatus();
-    log.debug("Set httpStatus: {}", status);
-    response.setStatusCode(((Result<?>) body).getHttpStatus());
-    log.debug(response.toString());
+    response.setStatusCode(status);
+    log.debug("Handle common response. URI: {}, method: {}, status: {}", request.getURI(),
+        request.getMethod(), status);
     return body;
   }
 }

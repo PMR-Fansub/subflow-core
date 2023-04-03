@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. PMR Fansub
+ * Copyright (c) 2022-2023. PMR Fansub
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -44,7 +46,7 @@ public class ExceptionControllerAdvice {
 
   @ExceptionHandler(BusinessException.class)
   public ResponseEntity<Object> handleBusinessException(BusinessException e) {
-    log.debug("In exception advice");
+    log.debug("Handled BusinessException. code: {}, msg: {}", e.getCode(), e.getMessage());
     Result<Object> result = Result.failed(e.getCode(), e.getMessage());
     return new ResponseEntity<>(result, new HttpHeaders(), e.getCode().getHttpStatus());
   }
@@ -60,5 +62,19 @@ public class ExceptionControllerAdvice {
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public Result<?> handleNotLoginException(NotLoginException e) {
     return Result.failed(ResultCode.NOT_LOGIN, e.getMessage());
+  }
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<Object> handleException(Exception e) {
+    log.error("Non-specific exception handled. type: {}, trace: {}", e.getClass(),
+        e.toString());
+    ResultCode code = ResultCode.UNKNOWN;
+    if (e instanceof HttpRequestMethodNotSupportedException) {
+      code = ResultCode.NOT_SUPPORTED;
+    } else if (e instanceof MissingServletRequestParameterException) {
+      code = ResultCode.FORM_INVALID;
+    }
+    Result<Object> result = Result.failed(code, code.getMessage());
+    return new ResponseEntity<>(result, new HttpHeaders(), code.getHttpStatus());
   }
 }
