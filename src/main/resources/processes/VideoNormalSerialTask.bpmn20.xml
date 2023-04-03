@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="VideoNormalSerialTask" name="VideoNormalSerialTask" isExecutable="true">
+    <startEvent id="startVideoNormalSerialTask"/>
+    <parallelGateway id="translateAndTimelineParallelGateway"/>
+    <sequenceFlow id="sid-73cd0979-e997-4181-847c-c6ef2d6b0c49" sourceRef="startVideoNormalSerialTask" targetRef="translateAndTimelineParallelGateway"/>
+    <userTask id="translate" name="翻译"/>
+    <userTask id="timeline" name="时轴"/>
+    <sequenceFlow id="sid-2e37802b-48ae-4319-9d83-11f5ebfea011" sourceRef="translateAndTimelineParallelGateway" targetRef="translate">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression"></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-5c92328f-f08b-4fa0-9e97-465ed1f18aad" sourceRef="translateAndTimelineParallelGateway" targetRef="timeline">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression"></conditionExpression>
+    </sequenceFlow>
+    <parallelGateway id="finishedTranslateAndTimelineParallelGateway"/>
+    <sequenceFlow id="sid-233c5545-db09-4ccd-a00a-17bef37aa1d6" sourceRef="translate" targetRef="finishedTranslateAndTimelineParallelGateway"/>
+    <sequenceFlow id="sid-6f07ba7c-4edd-48e4-b1bd-d6ad335509b6" sourceRef="timeline" targetRef="finishedTranslateAndTimelineParallelGateway"/>
+    <endEvent id="sid-a8a0ee82-63de-4cbe-bdbc-1236db6ffac8"/>
+    <sequenceFlow id="sid-8d80eda1-b4fa-43e1-b30b-dc165423cbec" sourceRef="finishedTranslateAndTimelineParallelGateway" targetRef="sid-a8a0ee82-63de-4cbe-bdbc-1236db6ffac8">
+      <conditionExpression xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="tFormalExpression"></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_VideoNormalSerialTask">
+    <bpmndi:BPMNPlane bpmnElement="VideoNormalSerialTask" id="BPMNPlane_VideoNormalSerialTask">
+      <bpmndi:BPMNShape id="shape-3f5848e2-1d00-4c00-ac98-ba42dcf6103c" bpmnElement="startVideoNormalSerialTask">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="-411.10626" y="-60.500015" width="30.0" height="30.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-55903934-b1a4-4c4e-bf40-bf61e1830c3a" bpmnElement="translateAndTimelineParallelGateway">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="-359.38586" y="-65.500015" width="40.0" height="40.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-7847c5c9-7af9-4d46-b4f7-65eb0ab96043" bpmnElement="sid-73cd0979-e997-4181-847c-c6ef2d6b0c49">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-381.10626" y="-45.500015"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-359.38586" y="-45.500015"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-49e25267-e192-45a3-b48d-a2e63a3a89d3" bpmnElement="translate">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="-265.78595" y="-158.16214" width="100.0" height="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-63664e0b-af72-45bb-998c-952a62864109" bpmnElement="timeline">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="-265.78595" y="-20.64212" width="100.0" height="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-d3e54304-8fc9-452c-9e05-2706f7a85c18" bpmnElement="sid-2e37802b-48ae-4319-9d83-11f5ebfea011">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-339.38586" y="-65.500015"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-339.38586" y="-117.44213"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-265.78598" y="-118.16215"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-adfc270e-2f4c-42d6-9d36-f6ead7bffe91" bpmnElement="sid-5c92328f-f08b-4fa0-9e97-465ed1f18aad">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-339.38586" y="-25.500015"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-339.38586" y="20.077877"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-265.78595" y="19.357878"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-f5fe893f-2d0c-464d-8b77-041ce72065a3" bpmnElement="finishedTranslateAndTimelineParallelGateway">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="-111.70587" y="-65.500015" width="40.0" height="40.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-eca7cc59-f9bf-4be2-892a-0bbfd1633a49" bpmnElement="sid-233c5545-db09-4ccd-a00a-17bef37aa1d6">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-165.78595" y="-118.16215"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-91.705864" y="-118.162155"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-91.70587" y="-65.500015"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-fa5c690a-2b44-4737-8307-482540a270e9" bpmnElement="sid-6f07ba7c-4edd-48e4-b1bd-d6ad335509b6">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-165.78595" y="19.35788"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-91.70588" y="19.357878"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-91.70587" y="-25.500015"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-cf74805b-1fea-4d81-8a4a-f32113e38de7" bpmnElement="sid-a8a0ee82-63de-4cbe-bdbc-1236db6ffac8">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="-24.153822" y="-60.50001" width="30.0" height="30.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-510f3d2e-3066-4cfa-a877-3e89c5f30d8f" bpmnElement="sid-8d80eda1-b4fa-43e1-b30b-dc165423cbec">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-71.70587" y="-45.500015"></omgdi:waypoint>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="-24.153822" y="-45.50001"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
