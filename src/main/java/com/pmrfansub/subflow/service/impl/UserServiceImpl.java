@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. PMR Fansub
+ * Copyright (c) 2022-2023. PMR Fansub
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,9 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.pmrfansub.subflow.common.BusinessException;
 import com.pmrfansub.subflow.common.ResultCode;
 import com.pmrfansub.subflow.common.UserStatus;
-import com.pmrfansub.subflow.dto.LoggedResp;
-import com.pmrfansub.subflow.dto.UpdateUserInfoRequest;
+import com.pmrfansub.subflow.dto.BasicUserInfo;
+import com.pmrfansub.subflow.dto.forms.LoggedResp;
+import com.pmrfansub.subflow.dto.forms.UpdateUserInfoReq;
 import com.pmrfansub.subflow.entity.User;
 import com.pmrfansub.subflow.repository.UserRepository;
 import com.pmrfansub.subflow.service.UserService;
@@ -51,9 +52,9 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void addNewUser(User user) {
-    if (userRepository.findByUsername(user.getUsername()) != null) {
+    if (userRepository.findByUsername(user.getUsername(), User.class) != null) {
       throw new BusinessException(ResultCode.REGISTER_FAILED, "用户名已被使用");
-    } else if (userRepository.findByEmail(user.getEmail()) != null) {
+    } else if (userRepository.findByEmail(user.getEmail(), User.class) != null) {
       throw new BusinessException(ResultCode.REGISTER_FAILED, "邮箱地址已被使用");
     }
     user.setStatus(UserStatus.ACTIVE.getValue());
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public LoggedResp loginUser(String username, String password, String remoteAddr) {
-    User user = userRepository.findByUsername(username);
+    User user = userRepository.findByUsername(username, User.class);
     if (user == null) {
       throw new BusinessException(ResultCode.LOGIN_FAILED, "用户名不存在");
     }
@@ -71,8 +72,8 @@ public class UserServiceImpl implements UserService {
       throw new BusinessException(ResultCode.LOGIN_FAILED, "用户名或密码错误");
     }
 
-    user.setLogin_ip(remoteAddr);
-    user.setLogin_time(new Date());
+    user.setLoginIp(remoteAddr);
+    user.setLoginTime(new Date());
     userRepository.save(user);
 
     StpUtil.login(user.getId());
@@ -89,7 +90,12 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void updateUserInfo(Integer uid, UpdateUserInfoRequest userInfoRequest) {
+  public BasicUserInfo getBasicUserInfoByUid(Integer uid) {
+    return userRepository.findById(uid, BasicUserInfo.class);
+  }
+
+  @Override
+  public void updateUserInfo(Integer uid, UpdateUserInfoReq userInfoRequest) {
     String nickname = userInfoRequest.getNickname();
     if (nickname != null) {
       updateNickname(uid, nickname);

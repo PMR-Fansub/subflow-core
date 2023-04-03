@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. PMR Fansub
+ * Copyright (c) 2022-2023. PMR Fansub
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,10 @@
 
 package com.pmrfansub.subflow.service;
 
-import com.pmrfansub.subflow.dto.LoggedResp;
-import com.pmrfansub.subflow.dto.UpdateUserInfoRequest;
+import com.pmrfansub.subflow.dto.forms.LoggedResp;
+import com.pmrfansub.subflow.dto.forms.UpdateUserInfoReq;
 import com.pmrfansub.subflow.entity.User;
+import com.pmrfansub.subflow.dto.BasicUserInfo;
 
 /**
  * 用户服务接口
@@ -59,13 +60,22 @@ public interface UserService {
   User getUserByUid(Integer uid);
 
   /**
+   * 通过UID查询用户基本信息
+   *
+   * @param uid 用户UID
+   * @return 用户基本信息实体
+   * @throws com.pmrfansub.subflow.common.BusinessException 通用业务异常
+   */
+  BasicUserInfo getBasicUserInfoByUid(Integer uid);
+
+  /**
    * 更新用户信息
    *
    * @param uid             用户UID
    * @param userInfoRequest 请求实体
    * @throws com.pmrfansub.subflow.common.BusinessException 通用业务异常
    */
-  void updateUserInfo(Integer uid, UpdateUserInfoRequest userInfoRequest);
+  void updateUserInfo(Integer uid, UpdateUserInfoReq userInfoRequest);
 
   /**
    * 更新昵称

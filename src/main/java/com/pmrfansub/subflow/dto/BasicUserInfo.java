@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023. PMR Fansub
+ * Copyright (c) 2023. PMR Fansub
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,22 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.pmrfansub.subflow.repository;
-
-import com.pmrfansub.subflow.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+package com.pmrfansub.subflow.dto;
 
 /**
  * @author Ginakira
  */
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface BasicUserInfo {
 
-  <T> T findById(Integer id, Class<T> type);
+  Integer getId();
 
-  <T> T findByUsername(String username, Class<T> type);
+  String getUsername();
 
-  <T> T findByEmail(String email, Class<T> type);
+  String getNickname();
 
-  <T> T findByUsernameOrEmail(String username, String email, Class<T> type);
-
+  String getAvatar();
 }
