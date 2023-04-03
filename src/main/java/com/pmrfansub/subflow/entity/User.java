@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022. PMR Fansub
+ * Copyright (c) 2022-2023. PMR Fansub
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 package com.pmrfansub.subflow.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +34,9 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 
+/**
+ * @author Ginakira
+ */
 @Getter
 @Setter
 @ToString
@@ -61,22 +65,22 @@ public class User {
   private Integer status;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(nullable = false, updatable = false)
+  @Column(nullable = false, updatable = false, name = "register_time")
   @CreationTimestamp
-  private java.util.Date register_time;
+  private Date registerTime;
 
   @JsonIgnore
-  @Column(nullable = false)
-  private String register_ip;
+  @Column(nullable = false, name = "register_ip")
+  private String registerIp;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(nullable = false)
+  @Column(nullable = false, name = "login_time")
   @CreationTimestamp
-  private java.util.Date login_time;
+  private Date loginTime;
 
   @JsonIgnore
-  @Column(nullable = false)
-  private String login_ip;
+  @Column(nullable = false, name = "login_ip")
+  private String loginIp;
 
   private String avatar;
 
